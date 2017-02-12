@@ -68,7 +68,7 @@ $ sudo apt-get update
 
 Since I choose to install ```Desktop``` version of ROS, the following packages are needed.
 
-** libconsole-bridge-dev:**
+**libconsole-bridge-dev:**
 ```
 $ cd ~/ros_catkin_ws/external_src
 $ sudo apt-get build-dep console-bridge
@@ -76,7 +76,7 @@ $ apt-get source -b console-bridge
 $ sudo dpkg -i libconsole-bridge0.2*.deb libconsole-bridge-dev_*.deb
 ```
 
-** liblz4-dev:**
+**liblz4-dev:**
 ```
 $ cd ~/ros_catkin_ws/external_src
 $ apt-get source -b lz4
@@ -117,4 +117,28 @@ $ cmake .
 $ sudo checkinstall make install
 ```
   When check-install asks for any changes, the name (2) needs to change from "collada-dom" to "collada-dom-dev" otherwise the rosdep install wont find it.
+
+#### Resolving Dependencies with rosdep
+```
+$ cd ~/ros_catkin_ws
+$ rosdep install --from-paths src --ignore-src --rosdistro indigo -y -r --os=debian:jessie
+```
+
+#### Building the catkin Workspace
+```
+$ sudo ./src/catkin/bin/catkin_make_isolated --install -DCMAKE_BUILD_TYPE=Release --install-space /opt/ros/indigo
+```
+
+This will take quite a long time. Since I fail a couple times, I'm not sure exactly how long does it take to finish. It's roughly 1 or 2 hours, maybe. But, after it finished, ROS should be installed!
+
+Remember to source the new installation:
+```
+$ source /opt/ros/indigo/setup.bash
+```
+Or optionally source the setup.bash in the ~/.bashrc, so that ROS environment variables are automatically added to your bash session every time a new shell is launched:
+```
+$ echo "source /opt/ros/indigo/setup.bash" >> ~/.bashrc
+```
+
+
 
