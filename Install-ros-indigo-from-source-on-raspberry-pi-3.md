@@ -71,7 +71,7 @@ The command will take a few minutes to run.
 
 
 #### 2.2 - Resolve Dependencies
----
+
 Before we can build the catkin workspace, there are some missing dependencies we need to manually build first. The required packages can be built from source in a new directory:
 ```
 $ mkdir ~/ros_catkin_ws/external_src
@@ -80,7 +80,7 @@ $ sudo sh -c 'echo "deb-src http://mirrordirector.raspbian.org/raspbian/ testing
 $ sudo apt-get update
 ```
 
-Since I choose to install ```Desktop``` version of ROS, the following packages are needed.
+Since I choose to install ```Desktop``` version of ROS, the following packages are needed. Please note, the packages installation order matters.
 
 **libconsole-bridge-dev:**
 ```
@@ -108,8 +108,14 @@ $ sudo checkinstall make install
 ```
   When check-install asks for any changes, the name (2) needs to change from "urdfdom-headers" to "liburdfdom-headers-dev" otherwise the rosdep install wont find it.
   
-  Note: recent version of urdfdom_headers are incompatible with the ROS Indigo because of changes from using Boost shared pointers to C++11 shared pointers. '9aed725' is the commit hash for the version just prior to the shared pointer change.
-
+  **Note:** recent version of urdfdom_headers are incompatible with the ROS Indigo because of changes from using Boost shared pointers to C++11 shared pointers. '9aed725' is the commit hash for the version just prior to the shared pointer change.
+  
+  **Also note:** this '9aed725' version doesn't include utils.h file. This will cause problem for the next package installation, so we need to add this utils.h file manually as using following command,
+```
+$ cd /usr/local/include/urdf_model
+$ sudo wget https://raw.githubusercontent.com/ros/urdfdom_headers/master/urdf_model/include/urdf_model/utils.h
+```
+  
  **liburdfdom-dev:**
 ```
 $ cd ~/ros_catkin_ws/external_src
