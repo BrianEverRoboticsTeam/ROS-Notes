@@ -14,7 +14,17 @@ If you would like to see what OS image you are running on your Raspberry Pi, you
 cat /etc/os-release
 ```
 Here is the result of my Raspberry Pi,
-> To be update
+```
+PRETTY_NAME="Raspbian GNU/Linux 8 (jessie)"
+NAME="Raspbian GNU/Linux"
+VERSION_ID="8"
+VERSION="8 (jessie)"
+ID=raspbian
+ID_LIKE=debian
+HOME_URL="http://www.raspbian.org/"
+SUPPORT_URL="http://www.raspbian.org/RaspbianForums"
+BUG_REPORT_URL="http://www.raspbian.org/RaspbianBugs"
+```
 
 
 #### Setup ROS Repositories
