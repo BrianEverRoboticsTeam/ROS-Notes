@@ -147,6 +147,42 @@ $ rosdep install --from-paths src --ignore-src --rosdistro indigo -y -r --os=deb
 ```
 
 
+#### 2.4 - Two Patches
+There are two patches we have to do in order to build the catkin Workspace successfully. One for collada_urdf as described [here](https://github.com/ros/robot_model/issues/12). Another patch is for rviz's mesh_loader. Since the instruction of how to apply those patch is seperated in several places (this might confuse and you might feel frustrated to find all the necessary info all at once), I will document the solution that work for me bellow,
+
+**Apply collada_urdf Patch**
+
+```
+$ cd ~/ros_catkin_ws/src/robot_model/collada_urdf/src
+```
+
+Then, download the patch file by visiting [http://groups.google.com/group/ros-sig-embedded/attach/1708811e0359ec39/0001-fixed-arm-build.patch?part=0.1&authuser=0&view=1](http://groups.google.com/group/ros-sig-embedded/attach/1708811e0359ec39/0001-fixed-arm-build.patch?part=0.1&authuser=0&view=1), and rename it to fix.patch.
+
+```
+$ patch < fix.patch
+```
+
+**Apply rviz's mesh_loader Patch**
+
+```
+$ nano ~/ros_catkin_ws/src/rviz/src/rviz/mesh_loader.cpp
+```
+
+Then, adding the following code at the end of all ```#include```,
+
+```cpp
+#ifdef __arm__  
+#include <strings.h>
+bool Assimp::IOSystem::ComparePaths(const char *p1, const char *p2) const  
+{  
+  return !::strcasecmp(p1,p2);  
+}  
+#endif
+```
+
+These two patches actually do the samething. However, I didn't find a patch file specifically for the rviz's mesh_loader from internet. So, I just manually adding code. I will construct a patch file for it once I figure out how to write a patch.
+
+
 #### 2.4 - Building the catkin Workspace
 ```
 $ sudo ./src/catkin/bin/catkin_make_isolated --install -DCMAKE_BUILD_TYPE=Release --install-space /opt/ros/indigo
