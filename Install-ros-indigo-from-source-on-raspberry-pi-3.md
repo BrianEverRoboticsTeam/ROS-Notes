@@ -4,6 +4,8 @@ This is the documentation/instruction of my personal experience installing ROS I
 
 it's not success yet, I will keep updating this documentation.
 
+The instructions that additional to [this ROS document](http://wiki.ros.org/ROSberryPi/Installing%20ROS%20Indigo%20on%20Raspberry%20Pi) will be mark like this :warning:.
+
 
 ## 1. Prerequisites
 #### 1.1 - Check OS Image that running on My Pi
@@ -110,7 +112,7 @@ $ sudo checkinstall make install
   
   **Note:** recent version of urdfdom_headers are incompatible with the ROS Indigo because of changes from using Boost shared pointers to C++11 shared pointers. '9aed725' is the commit hash for the version just prior to the shared pointer change.
   
-  **Also note:** this '9aed725' version doesn't include utils.h file. This will cause problem for the next package installation, so we need to add this utils.h file manually as using following command,
+  :warning: **Also note:** this '9aed725' version doesn't include utils.h file. This will cause problem for the next package installation, so we need to add this utils.h file manually as using following command,
 ```
 $ cd /usr/local/include/urdf_model
 $ sudo wget https://raw.githubusercontent.com/ros/urdfdom_headers/master/urdf_model/include/urdf_model/utils.h
@@ -183,7 +185,7 @@ bool Assimp::IOSystem::ComparePaths(const char *p1, const char *p2) const
 These two patches actually do the samething. However, I didn't find a patch file specifically for the rviz's mesh_loader from internet. So, I just manually adding code. I will construct a patch file for it once I figure out how to write a patch.
 
 
-#### 2.4 - Building the catkin Workspace
+#### 2.5 - Building the catkin Workspace
 ```
 $ sudo ./src/catkin/bin/catkin_make_isolated --install -DCMAKE_BUILD_TYPE=Release --install-space /opt/ros/indigo
 ```
@@ -199,5 +201,8 @@ Or optionally source the setup.bash in the ~/.bashrc, so that ROS environment va
 $ echo "source /opt/ros/indigo/setup.bash" >> ~/.bashrc
 ```
 
-
-
+# References
+- [http://wiki.ros.org/ROSberryPi/Installing%20ROS%20Indigo%20on%20Raspberry%20Pi](http://wiki.ros.org/ROSberryPi/Installing%20ROS%20Indigo%20on%20Raspberry%20Pi)
+- [http://www.infocool.net/kb/ASP/201612/249064.html](http://www.infocool.net/kb/ASP/201612/249064.html)
+- [https://github.com/ros/robot_model/issues/12](https://github.com/ros/robot_model/issues/12)
+- [https://groups.google.com/d/msg/ros-sig-embedded/26XlDtZhyNs/OexZAx6BCBcJ](https://groups.google.com/d/msg/ros-sig-embedded/26XlDtZhyNs/OexZAx6BCBcJ)
