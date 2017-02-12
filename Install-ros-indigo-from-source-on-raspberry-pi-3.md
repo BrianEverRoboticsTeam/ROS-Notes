@@ -5,8 +5,8 @@ This is the documentation/instruction of my personal experience installing ROS I
 it's not success yet, I will keep updating this documentation.
 
 
-## Prerequisites
-#### OS Image that running on My Pi
+## 1. Prerequisites
+#### 1.1 - OS Image that running on My Pi
 Raspbian Jessie is being used as the OS on my Raspberry Pi 3. The download page for current images of Raspbian is [http://www.raspberrypi.org/downloads/](http://www.raspberrypi.org/downloads/).
 
 If you would like to see what OS image you are running on your Raspberry Pi, you can use this command in Pi's terminal,
@@ -27,7 +27,7 @@ BUG_REPORT_URL="http://www.raspbian.org/RaspbianBugs"
 ```
 
 
-#### Setup ROS Repositories
+#### 1.2 - Setup ROS Repositories
 ```
 $ sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu jessie main" > /etc/apt/sources.list.d/ros-latest.list'
 $ wget https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -O - | sudo apt-key add -
@@ -38,21 +38,23 @@ $ sudo apt-get update
 $ sudo apt-get upgrade
 ```
 
-#### Install Bootstrap Dependencies
+#### 1.3 - Install Bootstrap Dependencies
 ```
 $ sudo apt-get install python-pip python-setuptools python-yaml python-distribute python-docutils python-dateutil python-six
 $ sudo pip install rosdep rosinstall_generator wstool rosinstall
 ```
 
-#### Initializing rosdep
+#### 1.4 - Initializing rosdep
 ```
 $ sudo rosdep init
 $ rosdep update
 ```
 
 
-## Installation
-#### Create a catkin Workspace
+## 2. Installation
+
+#### 2.1 - Create a catkin Workspace
+
 In order to build the core packages, we will need a catkin workspace. Create one now:
 ```
 $ mkdir ~/ros_catkin_ws
@@ -67,7 +69,9 @@ $ wstool init src indigo-desktop-wet.rosinstall
 
 The command will take a few minutes to run.
 
-#### Resolve Dependencies
+
+#### 2.2 - Resolve Dependencies
+---
 Before we can build the catkin workspace, there are some missing dependencies we need to manually build first. The required packages can be built from source in a new directory:
 ```
 $ mkdir ~/ros_catkin_ws/external_src
@@ -103,6 +107,7 @@ $ cmake .
 $ sudo checkinstall make install
 ```
   When check-install asks for any changes, the name (2) needs to change from "urdfdom-headers" to "liburdfdom-headers-dev" otherwise the rosdep install wont find it.
+  
   Note: recent version of urdfdom_headers are incompatible with the ROS Indigo because of changes from using Boost shared pointers to C++11 shared pointers. '9aed725' is the commit hash for the version just prior to the shared pointer change.
 
  **liburdfdom-dev:**
@@ -128,13 +133,17 @@ $ sudo checkinstall make install
 ```
   When check-install asks for any changes, the name (2) needs to change from "collada-dom" to "collada-dom-dev" otherwise the rosdep install wont find it.
 
-#### Resolving Dependencies with rosdep
+
+#### 2.3 - Resolving Dependencies with rosdep
+---
 ```
 $ cd ~/ros_catkin_ws
 $ rosdep install --from-paths src --ignore-src --rosdistro indigo -y -r --os=debian:jessie
 ```
 
-#### Building the catkin Workspace
+
+#### 2.4 - Building the catkin Workspace
+---
 ```
 $ sudo ./src/catkin/bin/catkin_make_isolated --install -DCMAKE_BUILD_TYPE=Release --install-space /opt/ros/indigo
 ```
