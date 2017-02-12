@@ -182,7 +182,19 @@ bool Assimp::IOSystem::ComparePaths(const char *p1, const char *p2) const
 #endif
 ```
 
-These two patches actually do the samething. However, I didn't find a patch file specifically for the rviz's mesh_loader from internet. So, I just manually adding code. I will construct a patch file for it once I figure out how to write a patch.
+:warning:**Apply urdf's model Patch**
+```
+$ nano ~/ros_catkin_ws/src/robot_model/urdf/CMakeLists.txt
+```
+
+Then, adding the following code bellow ``project(urdf)```,
+
+```cmake
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+```
+
+
+These patches are actually do the samething. However, I didn't find a patch file specifically for the rviz's mesh_loader from internet. So, I just manually adding code. I will construct a patch file for it once I figure out how to write a patch.
 
 
 #### 2.5 - Building the catkin Workspace
