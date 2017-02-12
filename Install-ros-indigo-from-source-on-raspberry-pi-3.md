@@ -6,7 +6,7 @@ it's not success yet, I will keep updating this documentation.
 
 
 ## 1. Prerequisites
-#### 1.1 - OS Image that running on My Pi
+#### 1.1 - Check OS Image that running on My Pi
 Raspbian Jessie is being used as the OS on my Raspberry Pi 3. The download page for current images of Raspbian is [http://www.raspberrypi.org/downloads/](http://www.raspberrypi.org/downloads/).
 
 If you would like to see what OS image you are running on your Raspberry Pi, you can use this command in Pi's terminal,
@@ -135,7 +135,6 @@ $ sudo checkinstall make install
 
 
 #### 2.3 - Resolving Dependencies with rosdep
----
 ```
 $ cd ~/ros_catkin_ws
 $ rosdep install --from-paths src --ignore-src --rosdistro indigo -y -r --os=debian:jessie
@@ -143,7 +142,6 @@ $ rosdep install --from-paths src --ignore-src --rosdistro indigo -y -r --os=deb
 
 
 #### 2.4 - Building the catkin Workspace
----
 ```
 $ sudo ./src/catkin/bin/catkin_make_isolated --install -DCMAKE_BUILD_TYPE=Release --install-space /opt/ros/indigo
 ```
